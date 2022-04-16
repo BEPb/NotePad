@@ -1,13 +1,18 @@
+"""
+Python 3.9 программа консоли блокнота (текстовый редактор)
+Название файла main.py
+
+Version: 0.1
+Author: Andrej Marinchenko
+Date: 2022-04-16
+"""
 import sys, os
 from PyQt5.QtWidgets import (
     QApplication,
     QMainWindow,
     QWidget,
-    QPushButton,
     QAction,
-    QLabel,
     QPlainTextEdit,
-    QStatusBar,
     QToolBar,
     QVBoxLayout,
     QFileDialog,
