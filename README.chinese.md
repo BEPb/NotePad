@@ -34,7 +34,8 @@ $ cd NotePad
  
 ### 安裝必要的包（安裝依賴）
 ```sh
-$    -r requirements.txt
+$    pip install -r requirements.txt
+
 ```
 
 ＃＃ 用法

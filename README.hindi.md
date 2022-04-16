@@ -34,7 +34,8 @@ $ cd NotePad
  
 ### आवश्यक पैकेज स्थापित करें (निर्भरता स्थापित करें)
 ```sh
-$    -r requirements.txt
+$    pip install -r requirements.txt
+
 ```
 
 ## उपयोग

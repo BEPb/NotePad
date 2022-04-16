@@ -34,7 +34,8 @@ $ cd NotePad
  
 ### Устанавливаем необходимые пакеты (Install dependencies)
 ```sh
-$    -r requirements.txt
+$    pip install -r requirements.txt
+
 ```
 
 ## Использование
