@@ -1,11 +1,3 @@
-"""
-Python 3.9 программа консоли блокнота (текстовый редактор)
-Название файла main.py
-
-Version: 0.1
-Author: Andrej Marinchenko
-Date: 2022-04-16
-"""
 import sys, os
 from PyQt5.QtWidgets import (
     QApplication,
@@ -17,12 +9,29 @@ from PyQt5.QtWidgets import (
     QVBoxLayout,
     QFileDialog,
     QMessageBox,
+    QDialog,
+    QLineEdit,
+    QPushButton
 )
 from PyQt5.QtCore import Qt, QSize
 from PyQt5.QtGui import QFontDatabase, QIcon, QKeySequence
 from PyQt5.QtPrintSupport import QPrintDialog
 
-
+class FindReplaceDialog(QDialog):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle("Find and Replace")
+        self.find_text = QLineEdit()
+        self.replace_text = QLineEdit()
+        self.find_button = QPushButton("Find")
+        self.replace_button = QPushButton("Replace")
+        self.layout = QVBoxLayout()
+        self.layout.addWidget(self.find_text)
+        self.layout.addWidget(self.replace_text)
+        self.layout.addWidget(self.find_button)
+        self.layout.addWidget(self.replace_button)
+        self.setLayout(self.layout)
+        
 class Notepad(QMainWindow):
     def __init__(self) -> None:
         super().__init__()
@@ -70,6 +79,17 @@ class Notepad(QMainWindow):
         edit_toolbar = QToolBar()
         edit_toolbar.setIconSize(QSize(30, 30))
         self.addToolBar(Qt.BottomToolBarArea, edit_toolbar)
+        # Find and Replace action
+        find_replace_action = self.create_action(
+            self,
+            'images/find_replace.png',
+            'Find and Replace',
+            'Find and Replace',
+            'Ctrl+F',
+            self.show_find_replace_dialog
+        )
+        editmenu.addAction(find_replace_action)
+
 
         """
         Undo, Redo actions
@@ -99,6 +119,8 @@ class Notepad(QMainWindow):
             'ctrl+shift+c',
             self.editor.clear
         )
+        
+        # cut action
         editmenu.addActions([undo_action, redo_action, clear])
         edit_toolbar.addActions([undo_action,redo_action, clear])
 
@@ -235,6 +257,7 @@ class Notepad(QMainWindow):
                 self.editor.setPlainText(text)
                 self.update_title()
                 self.editor.update()
+    
     def file_print(self):
         printDlg= QPrintDialog()
         if printDlg.exec_():
@@ -243,6 +266,10 @@ class Notepad(QMainWindow):
     def update_title(self):
         self.setWindowTitle('{} - Notepad 2.0'.format(os.path.basename(self.path) if self.path is not None else 'Unititled'))
     
+    def show_find_replace_dialog(self):
+        dialog = FindReplaceDialog(self)
+        dialog.exec_()
+        
     def dialog_message(self, message,type):
         dlg = QMessageBox(self)
         dlg.setText(message)
